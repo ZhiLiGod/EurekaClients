@@ -23,10 +23,10 @@ public class MovieCatalogResource {
 
   @GetMapping("/{userId}")
   public List<CatalogItemDto> getCatalog(@PathVariable final String userId) {
-    RatingsDto ratings = restTemplate.getForObject("http://localhost:8083/rating-info-api/", RatingsDto.class);
+    RatingsDto ratings = restTemplate.getForObject("http://rate-info-service:8083/rating-info-api/", RatingsDto.class);
 
     return ratings.getRatings().stream().map(r -> {
-      MovieDto dto = restTemplate.getForObject("http://localhost:8082/movie-info-api/" + r.getMovieId(), MovieDto.class);
+      MovieDto dto = restTemplate.getForObject("http://movie-info-service:8082/movie-info-api/" + r.getMovieId(), MovieDto.class);
 
       // @formatter:off
       return CatalogItemDto.builder()
