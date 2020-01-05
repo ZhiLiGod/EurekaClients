@@ -29,3 +29,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/main/java/META-INF/
+.mvn
+.settings
+target
+.classpath
+mvnw
+mvnw.cmd
