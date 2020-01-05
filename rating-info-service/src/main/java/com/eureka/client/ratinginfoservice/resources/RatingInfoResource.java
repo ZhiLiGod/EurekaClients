@@ -1,22 +1,22 @@
-package com.eureka.client.movieinfoservice.resources;
+package com.eureka.client.ratinginfoservice.resources;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eureka.client.movieinfoservice.dtos.MovieDto;
+import com.eureka.client.ratinginfoservice.dtos.RatingDto;
 
 @RestController
-@RequestMapping("/movie-info-api")
-public class MovieInfoResource {
+@RequestMapping("/rating-info-api")
+public class RatingInfoResource {
 
   @GetMapping("/{movieId}")
-  public MovieDto getMovieInfo(@PathVariable final String movieId) {
+  public RatingDto getRating(@PathVariable final String movieId) {
     // @formatter:off
-    return MovieDto.builder()
-        .name("Saw")
+    return RatingDto.builder()
         .movieId(movieId)
+        .rating(5)
         .build();
     // @formatter:on
   }
