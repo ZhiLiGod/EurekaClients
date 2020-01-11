@@ -26,10 +26,17 @@ public class UserServiceImpl implements UserService {
   public List<AspNetUsers> findAll() {
     List<AspNetUsers> users = (List<AspNetUsers>) redisUtil.get("allUsers");
 
+    // HIGH CONCURRENCY
     if (null == users) {
-      log.info("NO CACHE");
-      users = aspNetUsersRepository.findAll();
-      redisUtil.set("allUsers", users);
+      synchronized (this) {
+        users = (List<AspNetUsers>) redisUtil.get("allUsers");
+
+        if (null == users) {
+          log.info("NO CACHE");
+          users = aspNetUsersRepository.findAll();
+          redisUtil.set("allUsers", users);
+        }
+      }
     }
 
     return users;

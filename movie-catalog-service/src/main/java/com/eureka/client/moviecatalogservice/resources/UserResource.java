@@ -1,6 +1,8 @@
 package com.eureka.client.moviecatalogservice.resources;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,20 @@ public class UserResource {
 
   @GetMapping
   public List<AspNetUsers> getAllUsers() {
+    // TEST HIGH CONCURRENT
+    ExecutorService executorService = Executors.newFixedThreadPool(25);
+
+    for (int i = 0; i < 10000; i++) {
+      executorService.submit(new Runnable() {
+
+        @Override
+        public void run() {
+          userService.findAll();
+        }
+
+      });
+    }
+
     return userService.findAll();
   }
 
