@@ -31,4 +31,17 @@ public class RedisUtil {
     return result;
   }
 
+  public boolean delete(final String key) {
+    boolean result = false;
+
+    try {
+      redisTemplate.delete(key);
+      result = true;
+    } catch (Exception e) {
+      log.error("ERROR: ", e);
+    }
+
+    return result;
+  }
+
 }
