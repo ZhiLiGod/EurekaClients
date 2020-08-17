@@ -28,5 +28,13 @@ public class MovieServiceImpl implements MovieService {
     log.info("MovieId: " + movieId);
     return MovieDto.builder().name("Zhi").build();
   }
+  
+  @HystrixCommand(
+    fallbackMethod = "getBuyerOpenDealsFallBack",
+    commandProperties = {
+      @HystrixProperty(name = "execution.isolation.strategy",value = "SEMAPHORE"), // by default is isolated by Thread, but will lose session which is used in OAuth2RestTemplate
+      @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "20000") // do fallback if more than 20s
+    }
+  )
 
 }
